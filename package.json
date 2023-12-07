@@ -31,7 +31,8 @@
     "build": "tsc",
     "start": "node ./dist/index.js",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts src",
-    "format": "prettier --ignore-path .gitignore --write \"src/**/*.+(js|ts|json)\""
+    "format": "prettier --ignore-path .gitignore --write \"src/**/*.+(js|ts|json)\"",
+    "format:check": "prettier --ignore-path .gitignore --check \"src/**/*.+(js|ts|json)\""
   },
   "files": [
     "src/",
