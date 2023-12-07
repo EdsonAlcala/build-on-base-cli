@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import { textSync } from 'figlet';
 import * as inquirer from 'inquirer';
 
+import { TEMPLATES_NAMES } from './templates';
 import { createProject } from "./create";
 
 const program = new Command();
@@ -30,7 +31,10 @@ program
                 type: 'list',
                 name: 'template',
                 message: 'Select a template:',
-                choices: ['Template 1', 'Template 2', 'Template 3'], // Replace with your template choices
+                choices: Object.keys(TEMPLATES_NAMES).map((key) => ({
+                    name: TEMPLATES_NAMES[key],
+                    value: key,
+                }))
             },
         ]);
 

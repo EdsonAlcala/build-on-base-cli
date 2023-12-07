@@ -1,12 +1,13 @@
 import * as chalk from 'chalk';
 import * as fs from 'fs';
-import * as https from 'https';
+import { https } from 'follow-redirects';
 import * as http from 'http';
 import * as path from 'path';
 import { pipeline } from 'stream';
 import { promisify } from 'util';
 import * as unzipper from 'unzipper';
 
+import { TEMPLATES, TEMPLATES_NAMES } from './templates';
 import { isRootDirWriteable, getProjectDir } from './utils/dir';
 
 const pipelineAsync = promisify(pipeline);
@@ -38,7 +39,7 @@ export async function createProject(projectName: string, template: string) {
 
     console.log(
         `${chalk.cyan(
-            `Downloading files for the ${template} template. This might take a moment... \n`
+            `\nDownloading files for the ${TEMPLATES_NAMES[template]} template. This might take a moment... \n`
         )}`
     );
 
@@ -49,13 +50,13 @@ export async function createProject(projectName: string, template: string) {
     const isPackageJsonUpdated = updatePackageJson(appDir, projectName);
 
     if (isPackageJsonUpdated) {
-        displayFinalInstructions(projectName);
+        displayFinalInstructions();
     }
 }
 
 async function downloadAndExtractApps(projectName: string, template: string): Promise<void> {
     try {
-        const githubRepoUrl = 'https://github.com/username/repo/archive/main.zip'; // Replace with your GitHub repository URL
+        const githubRepoUrl = TEMPLATES[template];
 
         const response = await new Promise<http.IncomingMessage>((resolve, reject) => {
             https.get(githubRepoUrl, (res) => {
@@ -78,13 +79,24 @@ async function downloadAndExtractApps(projectName: string, template: string): Pr
         await pipelineAsync(response, fs.createWriteStream(tempZipFile));
 
         // Extract the ZIP file
-        await fs.createReadStream(tempZipFile).pipe(unzipper.Extract({ path: outputDir })).on('close', () => {
-            // Cleanup: Remove the temporary ZIP file
-            fs.unlinkSync(tempZipFile);
+        await new Promise((resolve, reject) => {
+            fs.createReadStream(tempZipFile)
+                .pipe(unzipper.Parse())
+                .on('entry', function (entry) {
+                    const fileName = entry.path.split('/').slice(1).join('/');
+                    const type = entry.type; // 'Directory' or 'File'
+                    const fullPath = path.join(outputDir, fileName);
+                    if (type === 'Directory') {
+                        fs.mkdirSync(fullPath, { recursive: true });
+                    } else {
+                        entry.pipe(fs.createWriteStream(fullPath));
+                    }
+                })
+                .on('close', resolve)
+                .on('error', reject);
         });
 
-        // Customize the app based on the selected template here
-        console.log(chalk.green('App downloaded and extracted successfully.'));
+        fs.unlinkSync(tempZipFile);
 
     } catch (error) {
         console.error(chalk.red('Error downloading and extracting app:'), error);
@@ -103,7 +115,6 @@ function updatePackageJson(appDir: string, newprojectName: string): boolean {
 
         fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-        console.log(chalk.green('package.json updated successfully.'));
         return true;
     } catch (error) {
         console.error(chalk.red('Error updating package.json:'), error);
@@ -112,7 +123,7 @@ function updatePackageJson(appDir: string, newprojectName: string): boolean {
 }
 
 // Function to display final instructions
-function displayFinalInstructions(newprojectName: string): void {
-    console.log(chalk.green(`Your Onchain app "${newprojectName}" has been created successfully!`));
-    console.log(chalk.blue('You can now navigate to the app directory and start working on your project.'));
+function displayFinalInstructions(): void {
+    console.log(chalk.green(`Your Onchain app has been created successfully! \n`));
+    console.log(chalk.blue('You can now navigate to the app directory and start working on your project. \n'));
 }
