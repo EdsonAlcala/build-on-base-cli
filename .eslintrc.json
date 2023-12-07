@@ -1,13 +1,16 @@
 {
     "env": {
-        "browser": true,
-        "es2021": true
+        "browser": false,
+        "es2021": false
     },
-    "extends": "standard-with-typescript",
     "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+        "ecmaVersion": "es2020",
+        "sourceType": "commonjs"
     },
-    "rules": {
-    }
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "rules": {}
 }

@@ -24,17 +24,14 @@
     "@typescript-eslint/parser": "^6.13.2",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-config-standard-with-typescript": "^40.0.0",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
-    "eslint-plugin-promise": "^6.0.0",
     "prettier": "^3.1.0",
     "typescript": "^5.3.3"
   },
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/index.js",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts src"
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts src",
+    "format": "prettier --ignore-path .gitignore --write \"src/**/*.+(js|ts|json)\""
   },
   "files": [
     "src/",
