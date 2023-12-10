@@ -6,6 +6,10 @@
   "exports": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "bin": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EdsonAlcala/build-on-base-cli.git"
+  },
   "type": "commonjs",
   "dependencies": {
     "@types/inquirer": "8.2.5",
