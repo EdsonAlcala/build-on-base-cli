@@ -48,7 +48,7 @@ export async function createProject(projectName: string, template: string) {
   const isPackageJsonUpdated = updatePackageJson(appDir, projectName)
 
   if (isPackageJsonUpdated) {
-    displayFinalInstructions()
+    displayFinalInstructions(projectName)
   }
 }
 
@@ -127,11 +127,36 @@ function updatePackageJson(appDir: string, newprojectName: string): boolean {
 }
 
 // Function to display final instructions
-function displayFinalInstructions(): void {
+function displayFinalInstructions(projectName: string): void {
   console.log(chalk.green('Your Onchain app has been created successfully! \n'))
   console.log(
     chalk.blue(
-      'You can now navigate to the app directory and start working on your project. \n',
+      `You can now navigate to the ${projectName} directory and start working on your project. \n`,
+    ),
+  )
+  console.log(
+    chalk.blue(
+      `Run cd ${projectName}`,
+    ),
+  )
+  console.log(
+    chalk.blue(
+      `yarn`,
+    ),
+  )
+  console.log(
+    chalk.blue(
+      `yarn chain`,
+    ),
+  )
+  console.log(
+    chalk.blue(
+      `yarn deploy`,
+    ),
+  )
+  console.log(
+    chalk.blue(
+      `yarn dev \n`,
     ),
   )
 }
