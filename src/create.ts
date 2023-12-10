@@ -134,29 +134,9 @@ function displayFinalInstructions(projectName: string): void {
       `You can now navigate to the ${projectName} directory and start working on your project. \n`,
     ),
   )
-  console.log(
-    chalk.blue(
-      `Run cd ${projectName}`,
-    ),
-  )
-  console.log(
-    chalk.blue(
-      `yarn`,
-    ),
-  )
-  console.log(
-    chalk.blue(
-      `yarn chain`,
-    ),
-  )
-  console.log(
-    chalk.blue(
-      `yarn deploy`,
-    ),
-  )
-  console.log(
-    chalk.blue(
-      `yarn dev \n`,
-    ),
-  )
+  console.log(chalk.blue(`Run cd ${projectName}`))
+  console.log(chalk.blue(`yarn`))
+  console.log(chalk.blue(`yarn chain`))
+  console.log(chalk.blue(`yarn deploy`))
+  console.log(chalk.blue(`yarn dev \n`))
 }
