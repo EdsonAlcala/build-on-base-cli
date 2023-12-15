@@ -19,6 +19,12 @@ $ npx build-on-base create
 
 $ cd <your app name>
 
+$ git init
+
+$ git add . 
+
+$ git commit -m "first commit"
+
 $ yarn 
 
 $ yarn chain
@@ -33,6 +39,7 @@ $ yarn dev
 In order to develop and test the CLI you need the following:
 
 - [NVM]
+- [Git] 
 - [Yarn] # Once you run `nvm use` install it globally via `corepack enable`
 
 Then you can run the following commands:
@@ -66,3 +73,4 @@ To extend the template options, include the name and Github url in the `template
 [Vite React TS + Foundry + OP Wagmi]: https://github.com/EdsonAlcala/vite-foundry/tree/op-wagmi-beta-integration
 [NVM]: https://github.com/nvm-sh/nvm
 [Yarn]: https://yarnpkg.com/
+[Git]: https://git-scm.com/
