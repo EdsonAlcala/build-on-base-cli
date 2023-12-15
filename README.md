@@ -8,6 +8,7 @@ Available boilerplates:
 
 - [NextJS + Foundry]
 - [Vite React TS + Foundry]
+- [Vite React TS + Foundry + OP Wagmi]
 
 ## Getting Started
 
@@ -62,5 +63,6 @@ To extend the template options, include the name and Github url in the `template
 
 [NextJS + Foundry]: https://github.com/EdsonAlcala/vite-foundry
 [Vite React TS + Foundry]: https://github.com/EdsonAlcala/nextjs-foundry
+[Vite React TS + Foundry + OP Wagmi]: https://github.com/EdsonAlcala/vite-foundry/tree/op-wagmi-beta-integration
 [NVM]: https://github.com/nvm-sh/nvm
 [Yarn]: https://yarnpkg.com/
